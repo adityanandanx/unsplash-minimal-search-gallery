@@ -6,14 +6,19 @@ const heights = [32, 40, 48, 56, 64, 72, 30, 20, 30, 50, 30, 20].map(
 </script>
 
 <template>
-  <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4">
-    <Transition name="fade" appear v-for="(n, i) in heights.length" :key="n">
-      <div
-        :style="{ height: heights[n], transitionDelay: `${i * 25}ms` }"
-        class="bg-gray-300 dark:bg-gray-700 rounded-md overflow-hidden animate-pulse"
-      ></div>
-    </Transition>
-  </div>
+  <TransitionGroup
+    name="fade"
+    tag="div"
+    class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4 relative"
+    appear
+  >
+    <div
+      v-for="(n, i) in heights.length"
+      :key="n"
+      :style="{ height: heights[n], transitionDelay: `${i * 25}ms` }"
+      class="bg-gray-300 dark:bg-gray-700 rounded-md overflow-hidden animate-pulse"
+    ></div>
+  </TransitionGroup>
 </template>
 
 <style scoped>
