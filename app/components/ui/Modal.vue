@@ -19,11 +19,11 @@ const isOpen = ref(false);
             @click.self="isOpen = false"
           >
             <div
-              class="content bg-background shadow-2xl p-10 rounded-md max-h-screen max-w-[90vw] overflow-y-auto"
+              class="relative content bg-background shadow-2xl p-10 rounded-md max-h-screen max-w-[90vw] overflow-y-auto"
             >
               <slot name="content" :close="() => (isOpen = false)" />
               <button
-                class="rounded-md bg-background p-2 absolute right-10 top-10 cursor-pointer"
+                class="rounded-md bg-background p-2 absolute right-0 top-0 cursor-pointer"
                 @click="isOpen = false"
               >
                 <XIcon />
@@ -37,22 +37,23 @@ const isOpen = ref(false);
 </template>
 
 <style scoped>
+/* backdrop transition */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.1s ease;
+  transition: opacity 0.2s ease;
 }
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
 
+/* content transition */
 .fade-enter-active .content,
 .fade-leave-active .content {
-  transition: opacity 0.1s ease, transform 0.1s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .fade-enter-from .content,
 .fade-leave-to .content {
-  opacity: 0;
-  transform: scale(0.95) translateY(-50px);
+  transform: translateY(100%);
 }
 </style>
