@@ -1,5 +1,14 @@
+<script setup>
+const { query } = useRoute();
+
+const { images, refresh, pending, error } = useUnsplashImages(
+  query.search || ""
+);
+</script>
 <template>
   <main>
-    <h1>Hello world</h1>
+    <pre>
+      {{ JSON.stringify(images, null, 2) }}
+    </pre>
   </main>
 </template>
