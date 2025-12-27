@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+
   app: {
     // basic default seo
     head: {
@@ -20,6 +21,7 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
   },
+
   runtimeConfig: {
     // unsplash keys
     unsplashAppId: "",
@@ -29,11 +31,16 @@ export default defineNuxtConfig({
       unsplashApiBase: "https://api.unsplash.com",
     },
   },
+
   css: ["./app/assets/css/main.css"],
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   imports: {
     dirs: ["shared/types/**"],
   },
+
+  modules: ["@nuxt/image"],
 });

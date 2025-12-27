@@ -1,11 +1,13 @@
 export const useUnsplashImages = (
-  query: string,
+  query: string | Ref<string>,
   page: number = 1,
   perPage: number = 10
 ) => {
   let result: ReturnType<typeof useFetch<ImageResponseItem[]>>;
-  // if no query, fetch general photos
-  if (query.trim() === "") {
+  // if empty query, fetch general photos
+  const isEmpty =
+    typeof query === "string" ? query.trim() === "" : query.value.trim() === "";
+  if (isEmpty) {
     result = useFetch(`/api/unsplash/photos`, {
       params: {
         page,

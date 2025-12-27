@@ -5,21 +5,24 @@ export interface ImageResponseItem {
   alternative_slugs: AlternativeSlugs;
   created_at: Date;
   updated_at: Date;
-  promoted_at: null;
+  promoted_at: Date;
   width: number;
   height: number;
   color: string;
   blur_hash: string;
   description: null;
   alt_description: string;
-  breadcrumbs: string[];
+  breadcrumbs: any[];
   urls: Urls;
   links: ImageResponseItemLinks;
   likes: number;
   liked_by_user: boolean;
   bookmarked: boolean;
   current_user_collections: any[];
-  sponsorship: Sponsorship;
+  sponsorship: null;
+  topic_submissions: TopicSubmissions;
+  asset_type: string;
+  user: User;
 }
 
 export interface AlternativeSlugs {
@@ -41,25 +44,37 @@ export interface ImageResponseItemLinks {
   download_location: string;
 }
 
-export interface Sponsorship {
-  impression_urls: any[];
-  tagline: string;
-  tagline_url: string;
-  sponsor: Sponsor;
+export interface TopicSubmissions {
+  spirituality: Spirituality;
+  wallpapers: Spirituality;
 }
 
-export interface Sponsor {
+export interface Spirituality {
+  status: string;
+  approved_on: Date;
+}
+
+export interface Urls {
+  raw: string;
+  full: string;
+  regular: string;
+  small: string;
+  thumb: string;
+  small_s3: string;
+}
+
+export interface User {
   id: string;
   updated_at: Date;
   username: string;
   name: string;
   first_name: string;
-  last_name: null;
+  last_name: string;
   twitter_username: null;
   portfolio_url: string;
-  bio: string;
+  bio: null;
   location: null;
-  links: SponsorLinks;
+  links: UserLinks;
   profile_image: ProfileImage;
   instagram_username: string;
   total_collections: number;
@@ -75,7 +90,7 @@ export interface Sponsor {
   social: Social;
 }
 
-export interface SponsorLinks {
+export interface UserLinks {
   self: string;
   html: string;
   photos: string;
@@ -94,13 +109,4 @@ export interface Social {
   portfolio_url: string;
   twitter_username: null;
   paypal_email: null;
-}
-
-export interface Urls {
-  raw: string;
-  full: string;
-  regular: string;
-  small: string;
-  thumb: string;
-  small_s3: string;
 }
