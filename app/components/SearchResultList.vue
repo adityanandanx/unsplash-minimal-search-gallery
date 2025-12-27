@@ -21,6 +21,7 @@ defineProps<{
               :alt="image.alt_description || 'Unsplash Image'"
               class="max-w-full h-[80vh] rounded-sm w-full object-contain mb-4"
             />
+            <p>{{ image.description || image.alt_description }}</p>
             <p class="text-sm text-gray-600 mb-2">
               Photo by
               <a
