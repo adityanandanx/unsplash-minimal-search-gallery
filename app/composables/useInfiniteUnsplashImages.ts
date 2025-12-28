@@ -5,7 +5,6 @@ export const useInfiniteUnsplashImages = (
   const page = ref(1);
   const images = ref<ImageResponseItem[]>([]);
   const hasMore = ref(true);
-  const isLoading = ref(false);
 
   const { data, error, refresh, pending } = useFetch<ImageResponseItem[]>(
     `/api/unsplash/photos`,
@@ -18,13 +17,18 @@ export const useInfiniteUnsplashImages = (
       key: () => buildUnsplashImageKey(query.value, page.value, perPage),
       lazy: true,
       immediate: false,
+      onRequestError(err) {
+        console.error("Request Error", err);
+      },
+      onResponseError(err) {
+        console.error("Response Error", err);
+      },
     }
   );
 
   const loadMore = async () => {
-    if (isLoading.value || !hasMore.value) return;
+    if (pending.value || !hasMore.value) return;
 
-    isLoading.value = true;
     await refresh();
 
     if (data.value) {
@@ -35,8 +39,6 @@ export const useInfiniteUnsplashImages = (
         page.value++;
       }
     }
-
-    isLoading.value = false;
   };
 
   watch(query, () => {
@@ -50,7 +52,6 @@ export const useInfiniteUnsplashImages = (
   return {
     images,
     hasMore,
-    isLoading,
     pending,
     loadMore,
     error,

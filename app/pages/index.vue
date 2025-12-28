@@ -5,8 +5,10 @@ const PER_PAGE = 10;
 const route = useRoute();
 // make the search query reactive
 const searchQuery = computed<string>(() => route.query.search as string);
-const { images, loadMore, isLoading, pending, error } =
-  useInfiniteUnsplashImages(searchQuery, PER_PAGE);
+const { images, loadMore, pending, error } = useInfiniteUnsplashImages(
+  searchQuery,
+  PER_PAGE
+);
 
 // initial load
 onMounted(() => {
@@ -20,7 +22,7 @@ onMounted(() => {
     <SearchResultListSkeleton class="" v-if="pending && images.length === 0" />
 
     <p v-if="error" class="text-red-500 text-center">
-      Error: {{ error.message }}
+      Error: {{ error.data.data ?? error.message }}
     </p>
     <SearchResultList v-else @loadMore="loadMore" :images="images" />
     <!-- loading spinner -->
