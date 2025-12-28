@@ -71,11 +71,7 @@ watch(
 
 <template>
   <div>
-    <p class="text-center mb-10" v-if="!images || images.length <= 0">
-      No images found. Please try a different query.
-    </p>
-
-    <div class="flex gap-2" v-else>
+    <div class="flex gap-2 px-2">
       <TransitionGroup
         name="fade"
         tag="div"

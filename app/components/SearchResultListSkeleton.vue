@@ -11,15 +11,9 @@ const heights = [32, 40, 48, 56, 64, 72, 30, 20, 30, 50, 30, 20].map(
   <TransitionGroup
     name="fade"
     tag="div"
-    class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4 px-4 relative"
+    class="columns-1 sm:columns-2 lg:columns-3 gap-2 space-y-2 px-2 relative"
     appear
   >
-    <!-- <div
-      v-for="(n, i) in heights.length"
-      :key="n"
-      :style="{ height: heights[n], transitionDelay: `${i * 25}ms` }"
-      class="bg-gray-300 dark:bg-gray-700 rounded-md overflow-hidden animate-pulse"
-    ></div> -->
     <SearchResultItemSkeleton
       v-for="(n, i) in heights.length"
       :key="`skeleton-${i}`"
