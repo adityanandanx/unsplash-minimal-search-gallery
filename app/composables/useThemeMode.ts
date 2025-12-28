@@ -17,7 +17,7 @@ export const useThemeMode = () => {
   };
 
   onMounted(() => {
-    if (!import.meta.client) return;
+    // if (!import.meta.client) return;
     // initial theme setup
     mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const savedTheme = localStorage.getItem("theme") as ThemeMode | null;

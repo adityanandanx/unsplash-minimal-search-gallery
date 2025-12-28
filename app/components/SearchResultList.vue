@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { Loader2Icon } from "lucide-vue-next";
-import Modal from "./ui/Modal.vue";
 import SearchResultItemSkeleton from "./SearchResultItemSkeleton.vue";
+import Modal from "./ui/Modal.vue";
 
 const COLUMNS_MAP = {
   mobile: 1,
@@ -40,17 +39,15 @@ const sentinels = useTemplateRef("sentinels");
 let observer: IntersectionObserver | null = null;
 
 watch(
-  [sentinels, screenType],
-  ([newSentinels]) => {
+  () => [sentinels.value, screenType.value, props.images],
+  () => {
     if (!import.meta.client) return;
     observer?.disconnect();
-    if (!newSentinels) return;
-    console.log(screenType.value);
+    if (!sentinels.value) return;
     observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            console.log("INTSES");
             emit("loadMore");
           }
         });
@@ -59,8 +56,7 @@ watch(
         threshold: 0.0,
       }
     );
-    newSentinels.forEach((sentinel) => {
-      console.log(sentinel?.$el);
+    sentinels.value.forEach((sentinel) => {
       observer?.observe(sentinel?.$el);
     });
 
