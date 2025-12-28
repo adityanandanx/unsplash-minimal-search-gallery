@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import Modal from "./ui/Modal.vue";
 
-defineProps<{
+const props = defineProps<{
   images: ImageResponseItem[] | undefined;
 }>();
+
+const emit = defineEmits({
+  loadMore: () => true,
+});
 </script>
 
 <template>
@@ -56,7 +60,9 @@ defineProps<{
         </template>
       </Modal>
     </TransitionGroup>
-    <!-- <SearchResultItem v-for="image in images" :key="image.id" :image="image" /> -->
+    <button class="block mx-auto p-10 cursor-pointer" @click="emit('loadMore')">
+      Load More
+    </button>
   </div>
 </template>
 <style scoped>

@@ -2,17 +2,26 @@
 const route = useRoute();
 // make the search query reactive
 const searchQuery = computed<string>(() => route.query.search as string);
-const { images, refresh, execute, pending, error } =
-  useUnsplashImages(searchQuery);
+const { images, loadMore, isLoading, pending, error } =
+  useInfiniteUnsplashImages(searchQuery);
+
+// initial load
+onMounted(() => {
+  if (searchQuery.value) {
+    loadMore();
+  }
+});
 </script>
 
 <template>
   <main>
-    <!-- <pre> -->
-    <!-- {{ JSON.stringify(images[0], null, 2) }} -->
-    <!-- </pre> -->
-    <SearchResultListSkeleton class="max-w-7xl mx-auto" v-if="pending" />
-    <p v-else-if="error" class="text-red-500">Error: {{ error.message }}</p>
-    <SearchResultList class="max-w-7xl mx-auto" v-else :images="images" />
+    <!-- <SearchResultListSkeleton class="max-w-7xl mx-auto" v-if="pending" />-->
+    <p v-if="error" class="text-red-500">Error: {{ error.message }}</p>
+    <SearchResultList
+      v-else
+      @loadMore="loadMore"
+      class="max-w-7xl mx-auto"
+      :images="images"
+    />
   </main>
 </template>

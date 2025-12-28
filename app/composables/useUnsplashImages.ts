@@ -1,5 +1,5 @@
 export const useUnsplashImages = (
-  query: string | Ref<string>,
+  query: Ref<string>,
   page: number = 1,
   perPage: number = 10
 ) => {
@@ -11,6 +11,7 @@ export const useUnsplashImages = (
         page,
         per_page: perPage,
       },
+      key: () => buildUnsplashImageKey(query.value, page, perPage),
       lazy: true,
     }
   );
