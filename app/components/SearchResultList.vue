@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SearchResultItemSkeleton from "./SearchResultItemSkeleton.vue";
+import SearchResultModalContent from "./SearchResultModalContent.vue";
 import Modal from "./ui/Modal.vue";
 
 const COLUMNS_MAP = {
@@ -93,30 +94,7 @@ watch(
           </template>
 
           <template #content="{ close }">
-            <div class="flex flex-col items-center masonry-column">
-              <NuxtImg
-                :placeholder="image.urls.small_s3"
-                :src="image.urls.full"
-                :alt="image.alt_description || 'Unsplash Image'"
-                :width="image.width"
-                :height="image.height"
-                class="max-w-full h-[80vh] rounded-sm w-full object-contain mb-4"
-              />
-
-              <p>{{ image.description || image.alt_description }}</p>
-
-              <p class="text-sm text-muted-foreground mb-2">
-                Photo by
-                <a
-                  :href="image.user.links.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-primary underline"
-                >
-                  {{ image.user.name }}
-                </a>
-              </p>
-            </div>
+            <SearchResultModalContent :image="image" />
           </template>
         </Modal>
         <SearchResultItemSkeleton

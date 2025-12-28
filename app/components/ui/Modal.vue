@@ -15,15 +15,15 @@ const isOpen = ref(false);
         <Transition name="fade">
           <div
             v-if="isOpen"
-            class="bg-background/80 inset-0 fixed flex flex-col items-center justify-center p-4"
+            class="bg-background/80 inset-0 fixed flex flex-col items-center justify-center p-0 md:p-4"
             @click.self="isOpen = false"
           >
             <div
-              class="relative content bg-background shadow-2xl p-10 rounded-md max-h-screen max-w-[90vw] overflow-y-auto"
+              class="relative content bg-background/20 backdrop-blur-3xl shadow-2xl shadow-black/50 p-4 md:p-8 rounded-md max-h-screen h-full w-full max-w-[90vw] overflow-y-auto overflow-x-hidden"
             >
               <slot name="content" :close="() => (isOpen = false)" />
               <button
-                class="rounded-md bg-background p-2 absolute right-0 top-0 cursor-pointer"
+                class="rounded-md p-2 absolute right-2 top-2 cursor-pointer"
                 @click="isOpen = false"
               >
                 <XIcon />
