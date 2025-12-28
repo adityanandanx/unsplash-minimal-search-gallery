@@ -55,6 +55,7 @@ watch(
       },
       {
         threshold: 0.0,
+        rootMargin: "400px",
       }
     );
     sentinels.value.forEach((sentinel) => {
@@ -101,9 +102,6 @@ watch(
         />
       </TransitionGroup>
     </div>
-    <button class="block mx-auto p-10 cursor-pointer" @click="emit('loadMore')">
-      Load More
-    </button>
   </div>
 </template>
 <style scoped>

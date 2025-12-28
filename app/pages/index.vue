@@ -2,8 +2,9 @@
 import { LoaderIcon, SearchIcon } from "lucide-vue-next";
 import SearchBar from "~/components/SearchBar.vue";
 import ThemeSwitcher from "~/components/ThemeSwitcher.vue";
+import Button from "~/components/ui/Button.vue";
 
-const PER_PAGE = 10;
+const PER_PAGE = 20;
 const route = useRoute();
 // make the search query reactive
 const searchQuery = computed<string>(() => route.query.search as string);
@@ -27,12 +28,20 @@ onMounted(() => {
       <SearchBar class="w-full" />
       <ThemeSwitcher />
     </div>
-    <p v-if="error" class="text-red-500 text-center">
-      Error: {{ error.data.data ?? error.message }}
-    </p>
-    <SearchResultList v-else @loadMore="loadMore" :images="images" />
-    <!-- only initial loading skeleton -->
     <SearchResultListSkeleton class="" v-if="pending && images.length === 0" />
+    <Transition name="fade">
+      <div
+        v-if="error"
+        class="z-50 text-red-500 fixed left-5 bottom-5 bg-background/80 backdrop-blur-md px-4 py-2 rounded-md shadow-md"
+      >
+        Error: {{ error.data.data ?? error.message }}
+        <Button variant="outline" class="ml-4 text-foreground" @click="loadMore"
+          >Retry</Button
+        >
+      </div>
+    </Transition>
+    <SearchResultList v-if="!error" @loadMore="loadMore" :images="images" />
+    <!-- only initial loading skeleton -->
     <!-- loading spinner -->
     <div
       :style="{ opacity: pending ? 1 : 0 }"
@@ -43,3 +52,15 @@ onMounted(() => {
     </div>
   </main>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+</style>
