@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { Loader2Icon } from "lucide-vue-next";
 import Modal from "./ui/Modal.vue";
+import SearchResultItemSkeleton from "./SearchResultItemSkeleton.vue";
 
 const COLUMNS_MAP = {
   mobile: 1,
@@ -15,37 +17,64 @@ const emit = defineEmits({
   loadMore: () => true,
 });
 
-const groupedImages = ref<ImageResponseItem[][]>([]);
 const { screenType } = useScreenType();
 const columns = computed(() => COLUMNS_MAP[screenType.value]);
 
-const groupImages = (n: number) => {
+const regroupImages = (n: number) => {
   if (!props.images) return [];
   const grouped: ImageResponseItem[][] = Array.from({ length: n }, () => []);
-
-  for (let col = 0; col < n; col++) {
-    for (let i = col; i < props.images.length; i += n) {
-      const image = props.images[i];
-      if (image) grouped[col]!.push(image);
-    }
-  }
+  const heights: number[] = Array.from({ length: n }, () => 0);
+  props.images.forEach((image) => {
+    // find the column with the minimum height
+    const minCol = heights.indexOf(Math.min(...heights));
+    grouped[minCol]!.push(image);
+    // update the height of the column
+    heights[minCol]! += image.height / image.width;
+  });
   return grouped;
 };
 
+const groupedImages = computed(() => regroupImages(columns.value));
+const sentinels = useTemplateRef("sentinels");
+
+let observer: IntersectionObserver | null = null;
+
 watch(
-  () => [props.images, columns.value],
-  () => {
-    groupedImages.value = groupImages(columns.value);
-  }
+  [sentinels, screenType],
+  ([newSentinels]) => {
+    if (!import.meta.client) return;
+    observer?.disconnect();
+    if (!newSentinels) return;
+    console.log(screenType.value);
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            console.log("INTSES");
+            emit("loadMore");
+          }
+        });
+      },
+      {
+        threshold: 0.0,
+      }
+    );
+    newSentinels.forEach((sentinel) => {
+      console.log(sentinel?.$el);
+      observer?.observe(sentinel?.$el);
+    });
+
+    onWatcherCleanup(() => {
+      observer?.disconnect();
+    });
+  },
+  { immediate: true, flush: "post" }
 );
 </script>
 
 <template>
   <div>
-    <p
-      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-      v-if="!images || images.length <= 0"
-    >
+    <p class="text-center mb-10" v-if="!images || images.length <= 0">
       No images found. Please try a different query.
     </p>
 
@@ -55,6 +84,7 @@ watch(
         tag="div"
         appear
         v-for="i in columns"
+        :key="i"
         class="flex flex-col gap-2 flex-1"
       >
         <Modal
@@ -67,11 +97,13 @@ watch(
           </template>
 
           <template #content="{ close }">
-            <div class="flex flex-col items-center">
+            <div class="flex flex-col items-center masonry-column">
               <NuxtImg
                 :placeholder="image.urls.small_s3"
                 :src="image.urls.full"
                 :alt="image.alt_description || 'Unsplash Image'"
+                :width="image.width"
+                :height="image.height"
                 class="max-w-full h-[80vh] rounded-sm w-full object-contain mb-4"
               />
 
@@ -91,6 +123,12 @@ watch(
             </div>
           </template>
         </Modal>
+        <SearchResultItemSkeleton
+          :key="`sentinel-${i}`"
+          ref="sentinels"
+          height="100%"
+          class="min-h-37.5"
+        />
       </TransitionGroup>
     </div>
     <button class="block mx-auto p-10 cursor-pointer" @click="emit('loadMore')">

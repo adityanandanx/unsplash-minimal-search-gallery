@@ -13,6 +13,8 @@ const props = defineProps<{
       :src="image.urls.small_s3"
       :alt="image.alt_description || 'Unsplash Image'"
       class="w-full h-full object-cover"
+      :width="image.width"
+      :height="image.height"
     />
     <div
       class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 pt-20 absolute bottom-0 left-0 right-0 bg-linear-to-t from-background to-background/0"
