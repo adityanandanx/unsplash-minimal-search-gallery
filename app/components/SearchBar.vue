@@ -24,12 +24,16 @@ onUnmounted(() => {
 });
 </script>
 <template>
-  <input
-    v-model="query"
-    @input="handleInput"
-    ref="inputEl"
-    class="border py-2 px-3 rounded-md focus:outline-primary focus:outline"
-    type="text"
-    placeholder="Start typing... (Ctrl+K to focus)"
-  />
+  <div
+    class="border rounded-md focus-within:outline-primary focus-within:outline"
+  >
+    <input
+      v-model="query"
+      @input="handleInput"
+      ref="inputEl"
+      type="text"
+      class="py-2 px-3 w-full outline-none"
+      placeholder="Start typing... (Ctrl+K to focus)"
+    />
+  </div>
 </template>
