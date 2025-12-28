@@ -15,7 +15,7 @@ const isOpen = ref(false);
         <Transition name="fade">
           <div
             v-if="isOpen"
-            class="bg-background/80 inset-0 fixed flex flex-col items-center justify-center p-0 md:p-4"
+            class="bg-black/80 z-50 inset-0 fixed flex flex-col items-center justify-center p-0 md:p-4"
             @click.self="isOpen = false"
           >
             <div
