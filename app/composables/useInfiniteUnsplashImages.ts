@@ -28,7 +28,7 @@ export const useInfiniteUnsplashImages = (
     await refresh();
 
     if (data.value) {
-      images.value.push(...data.value);
+      images.value = [...images.value, ...data.value];
       if (data.value.length < perPage) {
         hasMore.value = false;
       } else {
