@@ -1,11 +1,12 @@
 <script setup lang="ts">
-const query = ref<string>("");
+const route = useRoute();
+const query = ref<string>((route.query.search as string) || "");
 const router = useRouter();
 
 const inputEl = ref<HTMLInputElement | null>(null);
 
 const handleInput = debounce(() => {
-  router.replace(`?search=${query.value}`);
+  router.replace({ path: "/", query: { search: query.value } });
 }, 800);
 
 const handleKeyDown = (e: KeyboardEvent) => {
