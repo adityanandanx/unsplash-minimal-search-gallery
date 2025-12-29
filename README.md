@@ -4,6 +4,11 @@ A minimalistic, fast, responsive image search tool.
 
 ## [Live link](https://unsplash-minimal-search-gallery.vercel.app/)
 
+![Screenshot 1](./docs/images/shot_1.png)
+![Screenshot 2](./docs/images/shot_2.png)
+![Screenshot 3](./docs/images/shot_3.png)
+![Screenshot 4](./docs/images/shot_4.png)
+
 ## Tech Stack
 
 - Nuxt 4.2.2
