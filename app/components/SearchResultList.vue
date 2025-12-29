@@ -86,6 +86,12 @@ watch(
           :key="image.id"
           :style="{ transitionDelay: `${(j + (i - 1) * groupedImages[i - 1]!.length) * 25}ms` }"
         >
+          <template #title> Image by {{ image.user.name }} </template>
+
+          <template #description>
+            {{ image.description || image.alt_description || "No description" }}
+          </template>
+
           <template #trigger="{ open }">
             <SearchResultItem :image="image" @click="open()" />
           </template>
