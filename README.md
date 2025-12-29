@@ -18,10 +18,11 @@ A minimalistic, fast, responsive image search tool.
   - Node 20.x or newer ([nuxt requirement](https://nuxt.com/docs/4.x/getting-started/installation#prerequisites))
   - [pnpm](https://pnpm.io/)
 - Steps:
-  1. Clone the repo - `git clone https://github.com/adityanandanx/unsplash-minimal-search-gallery`
-  2. Install dependencies - `cd unsplash-minimal-search-gallery && pnpm install`
-  3. Run the dev server - `pnpm dev`
-  4. Open [http://localhost:3000](http://localhost:3000) on your browser
+  1. Clone the repo - `git clone https://github.com/adityanandanx/unsplash-minimal-search-gallery && cd unsplash-minimal-search-gallery`
+  2. Setup environment variables - `cp .env.example .env` and then copy paste your unsplash secrets in the `.env` file
+  3. Install dependencies - `pnpm install`
+  4. Run the dev server - `pnpm dev`
+  5. Open [http://localhost:3000](http://localhost:3000) on your browser
 
 ## Goals
 
