@@ -34,20 +34,25 @@ export const useThemeMode = () => {
     mediaQuery.removeEventListener("change", handleMediaChange);
   });
 
-  watch(theme, (newMode) => {
-    if (!import.meta.client) return;
-    if (newMode === "system") {
-      localStorage.removeItem("theme");
-      applyTheme(
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light"
-      );
-    } else {
-      localStorage.theme = newMode;
-      applyTheme(newMode);
-    }
-  });
+  watch(
+    theme,
+    (newMode) => {
+      if (!import.meta.client) return;
+      if (newMode === "system") {
+        localStorage.removeItem("theme");
+
+        applyTheme(
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light"
+        );
+      } else {
+        localStorage.theme = newMode;
+        applyTheme(newMode);
+      }
+    },
+    { immediate: true }
+  );
 
   return { theme };
 };

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { XIcon } from "lucide-vue-next";
 
-import { ref } from "vue";
-import Button from "./Button.vue";
-
 const isOpen = ref(false);
 const prevFocus = ref<HTMLElement | null>(null);
 const dialog = useTemplateRef<HTMLElement | null>("dialog");
@@ -35,23 +32,10 @@ const prepareToClose = () => {
   }
 };
 
-// focus handling and body scroll lock
 watch(isOpen, (open) => {
   open ? prepareToOpen() : prepareToClose();
 });
 onUnmounted(prepareToClose);
-
-const handleKeyDown = (e: KeyboardEvent) => {
-  console.log(document.activeElement);
-};
-
-onMounted(() => {
-  window.addEventListener("keydown", handleKeyDown);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("keydown", handleKeyDown);
-});
 </script>
 
 <template>
