@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   app: {
     // basic default seo
     head: {
-      title: "Saras Finance Search Demo", // default fallback title
+      title: "Saras Search", // default fallback title
       meta: [
         {
           name: "description",
