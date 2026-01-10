@@ -8,11 +8,12 @@ export default defineNuxtConfig({
   app: {
     // basic default seo
     head: {
-      title: "Saras Search", // default fallback title
+      title: "NoSplash", // default fallback title
       meta: [
         {
           name: "description",
-          content: "Vue.js Frontend Developer Assignment Task",
+          content:
+            "NoSplash - A minimal Unsplash client for browsing and downloading high-quality images.",
         },
       ],
       htmlAttrs: {
